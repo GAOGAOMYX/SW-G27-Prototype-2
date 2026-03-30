@@ -83,17 +83,18 @@
       grid-template-columns: 1.1fr 0.9fr;
     }
 
+    /* 统一左右两边的基础布局逻辑 */
     .landing-left, .landing-right {
       padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
     }
 
     .landing-right {
       background: var(--dark);
       color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 24px;
     }
 
     .badge {
@@ -125,13 +126,6 @@
       font-weight: 500;
     }
 
-    .btn-row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 24px;
-    }
-
     button {
       border: none;
       cursor: pointer;
@@ -140,9 +134,10 @@
     }
 
     .btn {
-      padding: 14px 22px;
+      padding: 14px 28px;
       border-radius: 999px;
       font-weight: 600;
+      font-size: 16px;
     }
 
     .btn-dark {
@@ -383,36 +378,44 @@
         <div class="eyebrow">Prototype</div>
         <h1 class="title">Before You Get a Quote</h1>
       </div>
-      <button id="restartBtn" class="btn btn-outline hidden">Restart prototype</button>
+      <button id="restartBtn" class="btn btn-outline hidden" style="width: auto; padding: 10px 16px;">Restart prototype</button>
     </div>
 
     <section id="landing" class="card landing">
+      
       <div class="landing-left">
-        <div class="badge">Scottish Widows · Protection</div>
-        <div style="height: 22px"></div>
-        <h2 class="title">Life Insurance</h2>
-        <p class="subtitle">Help protect the people who depend on you.</p>
-        <div class="btn-row">
-          <button class="btn btn-dark">Get a quote</button>
-          <button id="enterStoryBtn" class="btn btn-outline">Before you get a quote</button>
+        <div class="badge">Scottish Widows • Protection</div>
+        
+        <div>
+          <h2 class="title" style="margin-bottom: 12px;">Life Insurance</h2>
+          <p class="subtitle" style="margin:0;">Help protect the people who depend on you.</p>
         </div>
-        <p style="margin-top:18px;color:var(--subtle);line-height:1.8;">
+        
+        <button class="btn btn-dark" style="width: auto; padding: 14px 32px;" onclick="alert('进入传统报价 (演示中跳过)')">Get a quote</button>
+        
+        <p style="margin: 0; color:var(--subtle); font-size: 14px; line-height:1.6; max-width: 95%;">
           Prototype premise: hesitant users are offered a story-led alternative before product exposure intensifies.
         </p>
       </div>
+
       <div class="landing-right">
+        <div class="badge light">Alternative entry</div>
+        
         <div>
-          <div class="badge light">Alternative entry</div>
-          <div style="height: 20px"></div>
-          <h2 style="font-size: clamp(28px,4vw,38px); font-weight: 700; letter-spacing:-0.03em;">Not ready for a quote?</h2>
-          <p style="margin-top:16px; line-height:1.9; color:rgba(255,255,255,0.78);">
+          <h2 class="title" style="font-size: clamp(28px,4vw,38px); font-weight: 700; letter-spacing:-0.03em; margin-bottom: 12px;">Not ready for a quote?</h2>
+          <p style="line-height:1.8; color:rgba(255,255,255,0.8); margin: 0; font-size: 18px;">
             Explore how protection works in real life before comparing products, prices, or forms.
           </p>
         </div>
-        <div>
-          <div style="margin-bottom:10px; color:rgba(255,255,255,0.82);">• No forms</div>
-          <div style="margin-bottom:10px; color:rgba(255,255,255,0.82);">• No prices</div>
-          <div style="color:rgba(255,255,255,0.82);">• No pressure</div>
+        
+        <button id="enterStoryBtn" class="btn" style="background: white; color: var(--dark); width: auto; padding: 14px 32px;">
+          Before you get a quote →
+        </button>
+
+        <div style="margin: 0; color:rgba(255,255,255,0.6); font-size: 14px; line-height:1.6; display: flex; gap: 16px;">
+          <span>✓ No forms</span>
+          <span>✓ No prices</span>
+          <span>✓ No pressure</span>
         </div>
       </div>
     </section>
@@ -444,9 +447,9 @@
         <div id="stepContent" class="content-animate"></div>
 
         <div class="actions">
-          <button id="backBtn" class="btn btn-outline">← Back</button>
+          <button id="backBtn" class="btn btn-outline" style="width: auto;">← Back</button>
           <div class="action-right">
-            <button id="nextBtn" class="btn btn-dark">Next →</button>
+            <button id="nextBtn" class="btn btn-dark" style="width: auto;">Next →</button>
           </div>
         </div>
       </div>
