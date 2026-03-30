@@ -81,15 +81,15 @@
       overflow: hidden;
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
+      min-height: 480px; /* 保证左右等高 */
     }
 
-    /* 统一左右两边的基础布局逻辑 */
+    /* 核心修复：上下两极分化，强制底部对齐 */
     .landing-left, .landing-right {
       padding: 40px;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      gap: 24px;
+      justify-content: space-between; /* 强行把上下两部分推开 */
     }
 
     .landing-right {
@@ -208,16 +208,16 @@
     .progress-fill {
       height: 100%;
       background: var(--dark);
-      width: 20%;
+      width: 25%;
       transition: width 0.25s ease;
     }
 
     .step-tabs {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 28px;
-    }
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
 
     .step-tab {
       text-align: left;
@@ -384,38 +384,40 @@
     <section id="landing" class="card landing">
       
       <div class="landing-left">
-        <div class="badge">Scottish Widows • Protection</div>
-        
         <div>
+          <div class="badge">Scottish Widows • Protection</div>
+          <div style="height: 24px"></div>
           <h2 class="title" style="margin-bottom: 12px;">Life Insurance</h2>
           <p class="subtitle" style="margin:0;">Help protect the people who depend on you.</p>
         </div>
         
-        <button class="btn btn-dark" style="width: auto; padding: 14px 32px;" onclick="alert('进入传统报价 (演示中跳过)')">Get a quote</button>
-        
-        <p style="margin: 0; color:var(--subtle); font-size: 14px; line-height:1.6; max-width: 95%;">
-          Prototype premise: hesitant users are offered a story-led alternative before product exposure intensifies.
-        </p>
+        <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 16px; width: 100%;">
+          <button class="btn btn-dark" style="width: auto; padding: 14px 32px;" onclick="alert('进入传统报价 (演示中跳过)')">Get a quote</button>
+          <p style="margin: 0; color:var(--subtle); font-size: 14px; line-height:1.6; max-width: 95%;">
+            Prototype premise: hesitant users are offered a story-led alternative before product exposure intensifies.
+          </p>
+        </div>
       </div>
 
       <div class="landing-right">
-        <div class="badge light">Alternative entry</div>
-        
         <div>
+          <div class="badge light">Alternative entry</div>
+          <div style="height: 24px"></div>
           <h2 class="title" style="font-size: clamp(28px,4vw,38px); font-weight: 700; letter-spacing:-0.03em; margin-bottom: 12px;">Not ready for a quote?</h2>
           <p style="line-height:1.8; color:rgba(255,255,255,0.8); margin: 0; font-size: 18px;">
             Explore how protection works in real life before comparing products, prices, or forms.
           </p>
         </div>
         
-        <button id="enterStoryBtn" class="btn" style="background: white; color: var(--dark); width: auto; padding: 14px 32px;">
-          Before you get a quote →
-        </button>
-
-        <div style="margin: 0; color:rgba(255,255,255,0.6); font-size: 14px; line-height:1.6; display: flex; gap: 16px;">
-          <span>✓ No forms</span>
-          <span>✓ No prices</span>
-          <span>✓ No pressure</span>
+        <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 16px; width: 100%;">
+          <button id="enterStoryBtn" class="btn" style="background: white; color: var(--dark); width: auto; padding: 14px 32px;">
+            Before you get a quote →
+          </button>
+          <div style="margin: 0; color:rgba(255,255,255,0.6); font-size: 14px; line-height:1.6; display: flex; gap: 16px;">
+            <span>✓ No forms</span>
+            <span>✓ No prices</span>
+            <span>✓ No pressure</span>
+          </div>
         </div>
       </div>
     </section>
@@ -459,44 +461,6 @@
   <script>
     const steps = [
       {
-        label: 'Entry',
-        eyebrow: 'Before you get a quote',
-        title: 'See how protection works in real life',
-        subtitle: 'A no-pressure story layer for people who are not ready to compare products yet.',
-        icon: '🛡️',
-        render: () => `
-          <div class="content-animate">
-            <div class="grid-3">
-              <div class="mini-card center">No forms</div>
-              <div class="mini-card center">No prices</div>
-              <div class="mini-card center">No pressure</div>
-            </div>
-            <div style="height:20px"></div>
-            <div class="mini-card" style="border-radius:28px;background:#f8fafc;">
-              <div class="grid-main" style="align-items:center;">
-                <div>
-                  <p style="font-size:16px;line-height:1.9;color:var(--muted);">
-                    This space is for people who feel protection is probably relevant, but do not feel ready to go straight into a quote journey.
-                  </p>
-                  <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
-                    <span class="pill">Built for hesitant users</span>
-                    <span class="pill">Story-led</span>
-                    <span class="pill">Decision-free</span>
-                  </div>
-                </div>
-                <div class="mini-card" style="border-style:dashed;">
-                  <div style="line-height:2;color:var(--muted);font-size:14px;">
-                    <div>Protection page</div>
-                    <div>→ Quote path</div>
-                    <div style="font-weight:700;color:var(--text);">→ Story path</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        `,
-      },
-      {
         label: 'Overview',
         eyebrow: 'The whole journey at a glance',
         title: 'From first look to claim completion',
@@ -508,8 +472,8 @@
               ${[
                 ['Understand', 'See what protection is designed to help with.'],
                 ['Apply', 'Understand what information is needed and when.'],
-                ['Covered', 'Know what being covered actually means in daily life.'],
-                ['Claim', 'See what happens if something goes wrong.']
+                ['Covered', 'Know what being covered can mean in daily life.'],
+                ['Claim', 'See what may happen if something goes wrong.']
               ].map((item, i) => `
                 <div class="mini-card">
                   <div style="width:36px;height:36px;border-radius:999px;background:var(--dark);color:white;display:grid;place-items:center;font-size:13px;font-weight:700;margin-bottom:12px;">${i+1}</div>
