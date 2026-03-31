@@ -21,6 +21,7 @@
       --radius-xl: 20px;
       --radius-2xl: 28px;
       --radius-3xl: 32px;
+      --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     * { box-sizing: border-box; }
@@ -29,6 +30,7 @@
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: var(--bg);
       color: var(--text);
+      -webkit-font-smoothing: antialiased;
     }
 
     .page {
@@ -36,6 +38,11 @@
       margin: 0 auto;
       padding: 20px;
     }
+
+    /* Spacing Utilities */
+    .spacer-sm { height: 16px; }
+    .spacer-md { height: 20px; }
+    .spacer-lg { height: 24px; }
 
     .topbar {
       display: flex;
@@ -89,6 +96,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      gap: 32px;
     }
 
     .landing-right {
@@ -116,7 +124,12 @@
       border: none;
       cursor: pointer;
       font: inherit;
-      transition: 0.2s ease;
+      transition: var(--transition-base);
+    }
+
+    button:focus-visible {
+      outline: 2px solid var(--dark);
+      outline-offset: 2px;
     }
 
     .btn {
@@ -130,6 +143,11 @@
       background: var(--dark);
       color: white;
     }
+    
+    .btn-dark:hover {
+      background: var(--dark-2);
+      transform: translateY(-1px);
+    }
 
     .btn-outline {
       background: white;
@@ -137,14 +155,21 @@
       border: 1px solid var(--border);
     }
 
+    .btn-outline:hover {
+      background: var(--bg);
+    }
+
+    .hidden { display: none !important; }
+
     .story-wrap { display: none; }
-    .story-card { padding: 28px; }
+    .story-card { padding: 32px; }
 
     .story-header {
       display: flex;
       justify-content: space-between;
       gap: 24px;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
     }
 
     .story-title-row {
@@ -176,6 +201,7 @@
       font-size: 14px;
       color: var(--subtle);
       margin-bottom: 8px;
+      font-weight: 500;
     }
 
     .progress-bar {
@@ -190,14 +216,14 @@
       height: 100%;
       background: var(--dark);
       width: 25%;
-      transition: width 0.25s ease;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .step-tabs {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
 
     .step-tab {
@@ -207,23 +233,31 @@
       color: var(--muted);
       border-radius: 18px;
       padding: 14px 16px;
+      transition: all var(--transition-base);
+    }
+
+    .step-tab:hover:not(.active) {
+      border-color: var(--subtle);
+      background: var(--bg);
     }
 
     .step-tab.active {
       background: var(--dark);
       color: white;
       border-color: var(--dark);
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
     }
 
     .content-animate {
-      animation: fadeUp 0.24s ease;
+      animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(8px); }
+      from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* Grid Layouts */
     .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
     .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
@@ -233,7 +267,23 @@
       background: white;
       border: 1px solid var(--border);
       border-radius: 24px;
-      padding: 20px;
+      padding: 24px;
+      transition: box-shadow var(--transition-base), transform var(--transition-base);
+    }
+
+    .mini-card:hover {
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+      transform: translateY(-2px);
+    }
+
+    .mini-card h3 {
+      margin-bottom: 12px;
+      color: var(--dark);
+    }
+
+    .mini-card p {
+      color: var(--muted);
+      line-height: 1.6;
     }
 
     .section-note {
@@ -241,7 +291,7 @@
       border: 1px solid #d1fae5;
       border-radius: 24px;
       padding: 22px;
-      color: var(--muted);
+      color: var(--dark);
       line-height: 1.8;
     }
 
@@ -249,55 +299,112 @@
       border: 1px solid var(--border);
       border-radius: 18px;
       padding: 16px;
-      line-height: 1.7;
+      line-height: 1.6;
       color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .list-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .list-card .head {
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 4px;
     }
 
     .worry-item {
-      background: white;
-      border-radius: 18px;
+      background: var(--bg);
+      border-radius: 16px;
       padding: 16px;
-      line-height: 1.7;
-      color: var(--muted);
+      line-height: 1.6;
+      color: var(--dark);
       border: 1px solid var(--border);
       margin-bottom: 10px;
+      font-weight: 500;
     }
 
     .amber-note {
       background: var(--amber);
       border: 1px solid #fde68a;
       border-radius: 24px;
-      padding: 22px;
+      padding: 24px;
+    }
+    
+    .amber-note h3 {
+      margin-bottom: 12px;
+      color: #92400e;
+    }
+    
+    .amber-note p {
+      color: #92400e;
+      line-height: 1.8;
     }
 
     .quote-box {
       background: #f8fafc;
       border-radius: 18px;
-      padding: 18px;
-      line-height: 1.9;
+      padding: 20px;
+      line-height: 1.8;
       color: var(--muted);
       font-style: italic;
+      border-left: 4px solid var(--border);
     }
 
     .summary-card {
-      padding: 22px;
+      padding: 24px;
       border-radius: 24px;
       border: 1px solid var(--border);
       background: white;
+      transition: var(--transition-base);
+      cursor: pointer;
     }
 
+    .summary-card:hover {
+      border-color: var(--dark);
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    }
+    
+    .summary-card h3 {
+      margin-bottom: 8px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Mobile overrides */
     @media (max-width: 960px) {
       .landing,
       .grid-main,
-      .grid-4,
       .grid-3,
-      .grid-2,
-      .step-tabs {
+      .grid-2 {
         grid-template-columns: 1fr;
+      }
+
+      .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      /* Fixed mobile tab layout: 2x2 grid instead of 1 vertical list */
+      .step-tabs {
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .landing-left, .landing-right, .story-card { padding: 24px; }
       .progress-wrap { width: 100%; }
+    }
+    
+    @media (max-width: 480px) {
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -306,402 +413,345 @@
 
 <div class="page">
 
-<div class="topbar">
-<div>
-<div class="eyebrow">Prototype</div>
-<h1 class="title">Understanding Protection</h1>
-</div>
-<button id="restartBtn" class="btn btn-outline hidden">Restart prototype</button>
-</div>
+  <div class="topbar">
+    <div>
+      <div class="eyebrow">Prototype</div>
+      <h1 class="title">Understanding Protection</h1>
+    </div>
+    <button id="restartBtn" class="btn btn-outline hidden">Restart prototype</button>
+  </div>
 
-<section id="landing" class="card landing">
+  <section id="landing" class="card landing">
+    <div class="landing-left">
+      <div>
+        <div class="badge">Scottish Widows • Protection</div>
+        <div class="spacer-lg"></div>
+        <h2 class="title">Life Insurance</h2>
+        <p class="subtitle">
+          Protection can feel complicated. This space helps you understand it first.
+        </p>
+      </div>
 
-<div class="landing-left">
+      <div>
+        <button class="btn btn-dark">Get a quote</button>
+        <div class="spacer-sm"></div>
+        <p style="color:var(--subtle);font-size:14px;line-height:1.5;">
+          Prototype idea: give uncertain users a calm way to explore protection before jumping into quotes and forms.
+        </p>
+      </div>
+    </div>
 
-<div>
-<div class="badge">Scottish Widows • Protection</div>
+    <div class="landing-right">
+      <div>
+        <div class="badge light">Alternative entry</div>
+        <div class="spacer-lg"></div>
+        <h2 class="title">Not sure where to start?</h2>
+        <p style="line-height:1.8;color:rgba(255,255,255,0.8);margin-top:10px;">
+          Take a few minutes to see how protection works in real situations before looking at quotes or prices.
+        </p>
+      </div>
 
-<div style="height:24px"></div>
+      <div>
+        <button id="enterStoryBtn" class="btn" style="background:white;color:var(--dark);">
+          Explore the journey →
+        </button>
+        <div class="spacer-sm"></div>
+        <div style="color:rgba(255,255,255,0.7);font-size:14px;display:flex;gap:12px;flex-wrap:wrap;">
+          <span>✓ No forms</span>
+          <span>✓ No prices</span>
+          <span>✓ No pressure</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<h2 class="title">Life Insurance</h2>
+  <section id="storyWrap" class="story-wrap">
+    <div class="card story-card">
+      <div class="story-header">
+        <div>
+          <div id="stepEyebrow" class="badge"></div>
+          <div class="spacer-sm"></div>
+          <div class="story-title-row">
+            <div id="stepIcon" class="icon-box"></div>
+            <div>
+              <h2 id="stepTitle" class="title" style="font-size: 28px;"></h2>
+              <p id="stepSubtitle" class="subtitle" style="font-size: 16px;"></p>
+            </div>
+          </div>
+        </div>
 
-<p class="subtitle">
-Protection can feel complicated. This space helps you understand it first.
-</p>
+        <div class="progress-wrap">
+          <div class="progress-meta">
+            <span>Progress</span>
+            <span id="progressText"></span>
+          </div>
+          <div class="progress-bar">
+            <div id="progressFill" class="progress-fill"></div>
+          </div>
+        </div>
+      </div>
 
-</div>
+      <div id="stepTabs" class="step-tabs"></div>
+      
+      <div id="stepContentWrap">
+        <div id="stepContent" class="content-animate"></div>
+      </div>
 
-<div style="display:flex;flex-direction:column;align-items:flex-start;gap:16px;">
-
-<button class="btn btn-dark">Get a quote</button>
-
-<p style="color:var(--subtle);font-size:14px;">
-Prototype idea: give uncertain users a calm way to explore protection before jumping into quotes and forms.
-</p>
-
-</div>
-
-</div>
-
-<div class="landing-right">
-
-<div>
-
-<div class="badge light">Alternative entry</div>
-
-<div style="height:24px"></div>
-
-<h2 class="title">Not sure where to start?</h2>
-
-<p style="line-height:1.8;color:rgba(255,255,255,0.8);">
-Take a few minutes to see how protection works in real situations before looking at quotes or prices.
-</p>
-
-</div>
-
-<div style="display:flex;flex-direction:column;align-items:flex-start;gap:16px;">
-
-<button id="enterStoryBtn" class="btn" style="background:white;color:var(--dark);">
-Explore the journey →
-</button>
-
-<div style="color:rgba(255,255,255,0.6);font-size:14px;">
-<span>✓ No forms</span>
-<span>✓ No prices</span>
-<span>✓ No pressure</span>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="storyWrap" class="story-wrap">
-
-<div class="card story-card">
-
-<div class="story-header">
-
-<div>
-
-<div id="stepEyebrow" class="badge"></div>
-
-<div style="height:16px"></div>
-
-<div class="story-title-row">
-
-<div id="stepIcon" class="icon-box"></div>
-
-<div>
-<h2 id="stepTitle" class="title"></h2>
-<p id="stepSubtitle" class="subtitle"></p>
-</div>
-
-</div>
-
-</div>
-
-<div class="progress-wrap">
-
-<div class="progress-meta">
-<span>Progress</span>
-<span id="progressText"></span>
-</div>
-
-<div class="progress-bar">
-<div id="progressFill" class="progress-fill"></div>
-</div>
-
-</div>
-
-</div>
-
-<div id="stepTabs" class="step-tabs"></div>
-<div id="stepContent"></div>
-
-<div class="actions">
-<button id="backBtn" class="btn btn-outline">← Back</button>
-<button id="nextBtn" class="btn btn-dark">Next →</button>
-</div>
-
-</div>
-
-</section>
+      <div class="actions">
+        <button id="backBtn" class="btn btn-outline">← Back</button>
+        <button id="nextBtn" class="btn btn-dark">Next →</button>
+      </div>
+    </div>
+  </section>
 
 </div>
 
 <script>
-
-const steps=[
-
-{
-label:'Overview',
-eyebrow:'Understanding the journey',
-title:'The protection journey',
-subtitle:'See the key stages people move through when exploring protection.',
-icon:'🕒',
-render:()=>`
-<div class="grid-4">
-
-<div class="mini-card">
-<h3>Understand</h3>
-<p>Learn what protection is meant to support in real life.</p>
-</div>
-
-<div class="mini-card">
-<h3>Apply</h3>
-<p>See what information is usually needed during setup.</p>
-</div>
-
-<div class="mini-card">
-<h3>Covered</h3>
-<p>Understand what being protected may look like day to day.</p>
-</div>
-
-<div class="mini-card">
-<h3>Claim</h3>
-<p>See how support may work if something difficult happens.</p>
-</div>
-
-</div>
-
-<div style="height:20px"></div>
-
-<div class="section-note">
-<strong>Why this matters:</strong> many people leave early because the process feels unclear.
-</div>
-`
-},
-
-{
-label:'Setup',
-eyebrow:'Early stages',
-title:'What happens before protection begins?',
-subtitle:'A clearer look at timing, information, and how the process usually works.',
-icon:'📝',
-render:()=>`
-<div class="grid-main">
-
-<div class="mini-card">
-
-<h3>What usually happens</h3>
-
-<div class="list-card">
-<div class="head">You begin by exploring</div>
-You can look around without committing to anything.
-</div>
-
-<div class="list-card">
-<div class="head">Information is shared step by step</div>
-You provide details only when needed.
-</div>
-
-<div class="list-card">
-<div class="head">Payment happens later</div>
-Costs only appear once the setup progresses.
-</div>
-
-<div class="list-card">
-<div class="head">You can pause anytime</div>
-You can leave and come back later.
-</div>
-
-</div>
-
-<div class="mini-card">
-
-<h3>Common concerns</h3>
-
-<div class="worry-item">How long will this take?</div>
-<div class="worry-item">Will I have to pay immediately?</div>
-<div class="worry-item">Can I stop and come back later?</div>
-<div class="worry-item">How do I know I'm doing it correctly?</div>
-
-</div>
-
-</div>
-`
-},
-
-{
-label:'Claim',
-eyebrow:'Support',
-title:'If a claim is needed',
-subtitle:'Understanding how support may work when something serious happens.',
-icon:'🤝',
-render:()=>`
-<div class="grid-4">
-
-<div class="mini-card">
-<h3>1 Get in touch</h3>
-<p>You or your family contact the provider.</p>
-</div>
-
-<div class="mini-card">
-<h3>2 Information</h3>
-<p>Details and documents may be requested.</p>
-</div>
-
-<div class="mini-card">
-<h3>3 Review</h3>
-<p>The claim is checked against the cover.</p>
-</div>
-
-<div class="mini-card">
-<h3>4 Decision</h3>
-<p>The outcome and next steps are explained.</p>
-</div>
-
-</div>
-
-<div style="height:20px"></div>
-
-<div class="grid-2">
-
-<div class="amber-note">
-
-<h3>What the process may involve</h3>
-
-<p>
-• Clear communication about next steps<br>
-• Some evidence or documentation<br>
-• Emotional and administrative support<br>
-• Transparency about decisions
-</p>
-
-</div>
-
-<div class="mini-card">
-
-<h3>Customer perspective</h3>
-
-<div class="quote-box">
-“Understanding the claim steps helped it feel less uncertain.”
-</div>
-
-</div>
-
-</div>
-`
-},
-
-{
-label:'Next',
-eyebrow:'Next steps',
-title:'What would you like to do next?',
-subtitle:'You can continue exploring or move forward when ready.',
-icon:'👥',
-render:()=>`
-<div class="grid-3">
-
-<div class="summary-card">
-<h3>View quotes</h3>
-<p>Continue to see available protection options.</p>
-</div>
-
-<div class="summary-card">
-<h3>Come back later</h3>
-<p>Leave now and return when it suits you.</p>
-</div>
-
-<div class="summary-card">
-<h3>Discuss with someone</h3>
-<p>Share this information before deciding.</p>
-</div>
-
-</div>
-
-<div style="height:20px"></div>
-
-<div class="mini-card" style="background:#f8fafc;">
-<p>
-<strong>Prototype learning question:</strong>
-Can a simple story-based introduction help people feel more comfortable continuing their protection journey?
-</p>
-</div>
-`
-}
-
+const steps = [
+  {
+    label: 'Overview',
+    eyebrow: 'Understanding the journey',
+    title: 'The protection journey',
+    subtitle: 'See the key stages people move through when exploring protection.',
+    icon: '🕒',
+    render: () => `
+      <div class="grid-4">
+        <div class="mini-card">
+          <h3>Understand</h3>
+          <p>Learn what protection is meant to support in real life.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Apply</h3>
+          <p>See what information is usually needed during setup.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Covered</h3>
+          <p>Understand what being protected may look like day to day.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Claim</h3>
+          <p>See how support may work if something difficult happens.</p>
+        </div>
+      </div>
+      <div class="spacer-md"></div>
+      <div class="section-note">
+        <strong>Why this matters:</strong> many people leave early because the process feels unclear.
+      </div>
+    `
+  },
+  {
+    label: 'Setup',
+    eyebrow: 'Early stages',
+    title: 'What happens before protection begins?',
+    subtitle: 'A clearer look at timing, information, and how the process usually works.',
+    icon: '📝',
+    render: () => `
+      <div class="grid-main">
+        <div class="mini-card" style="padding:0; border:none; background:transparent; box-shadow:none;">
+          <h3 style="margin-bottom: 16px;">What usually happens</h3>
+          <div class="list-card">
+            <div class="head">You begin by exploring</div>
+            You can look around without committing to anything.
+          </div>
+          <div class="list-card">
+            <div class="head">Information is shared step by step</div>
+            You provide details only when needed.
+          </div>
+          <div class="list-card">
+            <div class="head">Payment happens later</div>
+            Costs only appear once the setup progresses.
+          </div>
+          <div class="list-card">
+            <div class="head">You can pause anytime</div>
+            You can leave and come back later.
+          </div>
+        </div>
+        <div class="mini-card">
+          <h3 style="margin-bottom: 16px;">Common concerns</h3>
+          <div class="worry-item">How long will this take?</div>
+          <div class="worry-item">Will I have to pay immediately?</div>
+          <div class="worry-item">Can I stop and come back later?</div>
+          <div class="worry-item">How do I know I'm doing it correctly?</div>
+        </div>
+      </div>
+    `
+  },
+  {
+    label: 'Claim',
+    eyebrow: 'Support',
+    title: 'If a claim is needed',
+    subtitle: 'Understanding how support may work when something serious happens.',
+    icon: '🤝',
+    render: () => `
+      <div class="grid-4">
+        <div class="mini-card">
+          <h3>1. Get in touch</h3>
+          <p>You or your family contact the provider.</p>
+        </div>
+        <div class="mini-card">
+          <h3>2. Information</h3>
+          <p>Details and documents may be requested.</p>
+        </div>
+        <div class="mini-card">
+          <h3>3. Review</h3>
+          <p>The claim is checked against the cover.</p>
+        </div>
+        <div class="mini-card">
+          <h3>4. Decision</h3>
+          <p>The outcome and next steps are explained.</p>
+        </div>
+      </div>
+      <div class="spacer-md"></div>
+      <div class="grid-2">
+        <div class="amber-note">
+          <h3>What the process may involve</h3>
+          <p>
+            • Clear communication about next steps<br>
+            • Some evidence or documentation<br>
+            • Emotional and administrative support<br>
+            • Transparency about decisions
+          </p>
+        </div>
+        <div class="mini-card">
+          <h3>Customer perspective</h3>
+          <div class="spacer-sm"></div>
+          <div class="quote-box">
+            “Understanding the claim steps helped it feel less uncertain. I knew exactly what they would ask for.”
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
+    label: 'Next',
+    eyebrow: 'Next steps',
+    title: 'What would you like to do next?',
+    subtitle: 'You can continue exploring or move forward when ready.',
+    icon: '👥',
+    render: () => `
+      <div class="grid-3">
+        <div class="summary-card">
+          <h3>View quotes</h3>
+          <p style="color:var(--muted)">Continue to see available protection options.</p>
+        </div>
+        <div class="summary-card">
+          <h3>Come back later</h3>
+          <p style="color:var(--muted)">Leave now and return when it suits you.</p>
+        </div>
+        <div class="summary-card">
+          <h3>Discuss with someone</h3>
+          <p style="color:var(--muted)">Share this information before deciding.</p>
+        </div>
+      </div>
+      <div class="spacer-md"></div>
+      <div class="mini-card" style="background:#f8fafc; border-color:var(--border);">
+        <p>
+          <strong>Prototype learning question:</strong><br>
+          Can a simple story-based introduction help people feel more comfortable continuing their protection journey?
+        </p>
+      </div>
+    `
+  }
 ];
 
-let currentStep=0
+let currentStep = 0;
 
-const landing=document.getElementById('landing')
-const storyWrap=document.getElementById('storyWrap')
-const enterStoryBtn=document.getElementById('enterStoryBtn')
-const restartBtn=document.getElementById('restartBtn')
-const backBtn=document.getElementById('backBtn')
-const nextBtn=document.getElementById('nextBtn')
-const stepEyebrow=document.getElementById('stepEyebrow')
-const stepTitle=document.getElementById('stepTitle')
-const stepSubtitle=document.getElementById('stepSubtitle')
-const stepIcon=document.getElementById('stepIcon')
-const progressText=document.getElementById('progressText')
-const progressFill=document.getElementById('progressFill')
-const stepTabs=document.getElementById('stepTabs')
-const stepContent=document.getElementById('stepContent')
+const landing = document.getElementById('landing');
+const storyWrap = document.getElementById('storyWrap');
+const enterStoryBtn = document.getElementById('enterStoryBtn');
+const restartBtn = document.getElementById('restartBtn');
+const backBtn = document.getElementById('backBtn');
+const nextBtn = document.getElementById('nextBtn');
+const stepEyebrow = document.getElementById('stepEyebrow');
+const stepTitle = document.getElementById('stepTitle');
+const stepSubtitle = document.getElementById('stepSubtitle');
+const stepIcon = document.getElementById('stepIcon');
+const progressText = document.getElementById('progressText');
+const progressFill = document.getElementById('progressFill');
+const stepTabs = document.getElementById('stepTabs');
+const stepContent = document.getElementById('stepContent');
 
-function renderTabs(){
-stepTabs.innerHTML=steps.map((step,i)=>`
-<button class="step-tab ${i===currentStep?'active':''}" data-index="${i}">
-<small>Step ${i+1}</small>
-<div>${step.label}</div>
-</button>
-`).join('')
-stepTabs.querySelectorAll('.step-tab').forEach(btn=>{
-btn.addEventListener('click',()=>{
-currentStep=Number(btn.dataset.index)
-renderStep()
-})
-})
+function renderTabs() {
+  stepTabs.innerHTML = steps.map((step, i) => `
+    <button class="step-tab ${i === currentStep ? 'active' : ''}" data-index="${i}" aria-label="Go to step ${i + 1}: ${step.label}">
+      <small style="opacity: 0.8; font-weight: 500;">Step ${i + 1}</small>
+      <div style="font-weight: 600; margin-top: 4px;">${step.label}</div>
+    </button>
+  `).join('');
+  
+  stepTabs.querySelectorAll('.step-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if(currentStep !== Number(btn.dataset.index)) {
+        currentStep = Number(btn.dataset.index);
+        renderStep();
+      }
+    });
+  });
 }
 
-function renderStep(){
-const step=steps[currentStep]
-stepEyebrow.textContent=step.eyebrow
-stepTitle.textContent=step.title
-stepSubtitle.textContent=step.subtitle
-stepIcon.textContent=step.icon
-progressText.textContent=`${currentStep+1}/${steps.length}`
-progressFill.style.width=`${((currentStep+1)/steps.length)*100}%`
-stepContent.innerHTML=step.render()
-renderTabs()
-backBtn.disabled=currentStep===0
-nextBtn.textContent=currentStep===steps.length-1?'Return':'Next →'
+function triggerAnimation() {
+  // Reset the animation class to force a reflow and re-trigger the CSS animation
+  stepContent.classList.remove('content-animate');
+  void stepContent.offsetWidth; // Trigger reflow
+  stepContent.classList.add('content-animate');
 }
 
-function enterStory(){
-landing.style.display='none'
-storyWrap.style.display='block'
-restartBtn.classList.remove('hidden')
-currentStep=0
-renderStep()
+function renderStep() {
+  const step = steps[currentStep];
+  stepEyebrow.textContent = step.eyebrow;
+  stepTitle.textContent = step.title;
+  stepSubtitle.textContent = step.subtitle;
+  stepIcon.textContent = step.icon;
+  
+  progressText.textContent = `${currentStep + 1} of ${steps.length}`;
+  progressFill.style.width = `${((currentStep + 1) / steps.length) * 100}%`;
+  
+  stepContent.innerHTML = step.render();
+  triggerAnimation();
+  
+  renderTabs();
+  
+  backBtn.disabled = currentStep === 0;
+  backBtn.style.opacity = currentStep === 0 ? '0.5' : '1';
+  backBtn.style.cursor = currentStep === 0 ? 'not-allowed' : 'pointer';
+  
+  nextBtn.textContent = currentStep === steps.length - 1 ? 'Return to start' : 'Next →';
 }
 
-function restart(){
-landing.style.display='grid'
-storyWrap.style.display='none'
-restartBtn.classList.add('hidden')
-currentStep=0
+function enterStory() {
+  landing.style.display = 'none';
+  storyWrap.style.display = 'block';
+  restartBtn.classList.remove('hidden');
+  currentStep = 0;
+  renderStep();
 }
 
-enterStoryBtn.addEventListener('click',enterStory)
-restartBtn.addEventListener('click',restart)
-backBtn.addEventListener('click',()=>{
-if(currentStep>0){
-currentStep--
-renderStep()
+function restart() {
+  landing.style.display = 'grid';
+  storyWrap.style.display = 'none';
+  restartBtn.classList.add('hidden');
+  currentStep = 0;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-})
-nextBtn.addEventListener('click',()=>{
-if(currentStep<steps.length-1){
-currentStep++
-renderStep()
-}else{
-restart()
-}
-})
+
+enterStoryBtn.addEventListener('click', enterStory);
+restartBtn.addEventListener('click', restart);
+
+backBtn.addEventListener('click', () => {
+  if (currentStep > 0) {
+    currentStep--;
+    renderStep();
+  }
+});
+
+nextBtn.addEventListener('click', () => {
+  if (currentStep < steps.length - 1) {
+    currentStep++;
+    renderStep();
+  } else {
+    restart();
+  }
+});
 
 </script>
 
