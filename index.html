@@ -143,21 +143,38 @@
     .pie-group.active .slice-title { font-size: 16px; margin-bottom: 6px; }
     .pie-group.active .slice-desc { opacity: 0.95; max-height: 150px; margin-top: 4px; }
 
-    /* --- 第二部分：Setup 时间轴与卡片样式 --- */
-    .setup-timeline { position: relative; display: flex; justify-content: space-between; margin: 40px 0 60px 0; padding: 0 20px; }
-    .timeline-bg-line { position: absolute; top: 132px; left: 40px; right: 40px; height: 2px; background: var(--border); z-index: 1; }
+    /* --- 第二部分：Setup 时间轴与无框居中排版 --- */
+    /* 精确计算：140px 容器的中心是 70px，贯穿线从第一个中心连到最后一个中心 */
+    .setup-timeline { position: relative; display: flex; justify-content: space-between; margin: 40px auto 60px; padding: 0; max-width: 960px;}
+    .timeline-bg-line { position: absolute; top: 96px; left: 70px; right: 70px; height: 2px; background: var(--border); z-index: 1; }
     .timeline-step { display: flex; flex-direction: column; align-items: center; width: 140px; z-index: 2; text-align: center; }
-    .img-placeholder-sm { width: 120px; height: 100px; background: #e2e8f0; border-radius: 8px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--muted); font-size: 12px; font-weight: 500; margin-bottom: 24px; }
-    .timeline-node { width: 16px; height: 16px; background: #e2e8f0; border: 3px solid var(--card); border-radius: 50%; margin-bottom: 16px; box-shadow: 0 0 0 2px var(--dark); }
+    
+    .timeline-icon { width: 64px; height: 64px; margin-bottom: 24px; display: flex; justify-content: center; align-items: center; }
+    .timeline-icon img { width: 100%; height: 100%; object-fit: contain; }
+    
+    .timeline-node { width: 16px; height: 16px; background: #e2e8f0; border: 3px solid var(--card); border-radius: 50%; margin-bottom: 16px; box-shadow: 0 0 0 2px var(--dark); position: relative; z-index: 2; }
     .timeline-label-step { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
     .timeline-label-title { font-size: 13px; color: var(--muted); line-height: 1.4; font-weight: 500; }
     
-    .path-card { background: white; border-radius: 20px; padding: 0; display: flex; flex-direction: column; }
-    .img-placeholder-lg { width: 100%; height: 200px; background: #e2e8f0; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--dark); font-weight: 600; font-size: 15px; margin-bottom: 24px; }
+    /* 核心修复：整个图文网格限制最大宽度并强制居中，解决视觉重心偏左的问题 */
+    .setup-paths-grid {
+      display: grid; 
+      grid-template-columns: repeat(2, 1fr); 
+      gap: 100px; /* 稍微拉开两列间距，更显高级 */
+      max-width: 850px; 
+      margin: 0 auto; 
+    }
+
+    .path-card { background: transparent; border-radius: 0; padding: 0; display: flex; flex-direction: column; border: none; box-shadow: none; }
+    
+    .path-image-wrap { width: 100%; height: 240px; display: flex; justify-content: center; align-items: center; background: transparent; padding: 0 0 24px 0; }
+    .path-image-wrap img { width: 100%; height: 100%; object-fit: contain; filter: none; mix-blend-mode: multiply; } /* 如果你的底图是 JPG 且想去白底，保留 multiply */
+    
+    .path-content { padding: 0; border: none; width: 100%; }
     .path-title { font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
-    .path-tag { font-size: 12px; background: #eff6ff; color: #1e40af; padding: 4px 10px; border-radius: 6px; font-weight: 600; }
-    .path-list { margin: 0; padding-left: 20px; color: var(--text); font-size: 14px; line-height: 1.8; }
-    .path-list li { margin-bottom: 8px; }
+    .path-tag { font-size: 13px; background: #eff6ff; color: #1e40af; padding: 4px 12px; border-radius: 8px; font-weight: 600; }
+    .path-list { margin: 0; padding-left: 20px; color: var(--muted); font-size: 15px; line-height: 1.8; }
+    .path-list li { margin-bottom: 12px; }
 
     /* --- 第三部分：Cover 表格与服务列表样式 --- */
     .sw-table-wrap { width: 100%; overflow-x: auto; margin-bottom: 32px; border-radius: 12px; border: 1px solid var(--border); }
@@ -172,12 +189,13 @@
     .cover-bullet-list li { margin-bottom: 8px; }
     
     .service-item { display: flex; gap: 20px; align-items: center; margin-bottom: 16px; background: white; padding: 16px; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
-    .service-img { width: 80px; height: 80px; background: #e2e8f0; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--muted); font-weight: 500; flex-shrink: 0; text-align: center; line-height: 1.4; }
+    .service-img { width: 80px; height: 80px; background: #e2e8f0; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--muted); font-weight: 500; flex-shrink: 0; text-align: center; line-height: 1.4; border: 1px dashed var(--subtle); }
+    .service-img img { width: 100%; height: 100%; object-fit: contain; }
+    
     .service-text h4 { margin: 0 0 4px 0; color: var(--dark); font-size: 16px; display: flex; align-items: center; gap: 8px; }
     .service-text p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
     .service-badge { font-size: 11px; background: var(--green); color: #065f46; padding: 2px 8px; border-radius: 4px; font-weight: 700; text-transform: uppercase; }
 
-    /* 折叠面板 Accordion */
     details.sw-accordion { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-top: 32px; transition: all 0.3s ease; box-shadow: var(--shadow-sm); }
     details.sw-accordion[open] { border-color: var(--dark); box-shadow: var(--shadow-md); }
     details.sw-accordion summary { font-weight: 700; font-size: 18px; color: var(--dark); cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; }
@@ -186,33 +204,80 @@
     details.sw-accordion[open] summary::after { transform: rotate(180deg); }
     details.sw-accordion .accordion-content { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); animation: fadeUp 0.4s ease; }
 
+    /* --- 第四部分：Process 弹性对齐布局 --- */
+    .claim-sync-layout { 
+      display: flex; 
+      width: 100%; 
+      margin-top: 40px; 
+      align-items: stretch;
+      gap: 40px; 
+    }
+    .claim-image-container { 
+      width: 45%; 
+      flex-shrink: 0; 
+      display: flex; 
+    }
+    .claim-image-container img { 
+      width: 100%; 
+      height: auto; 
+      display: block; 
+      border-radius: 12px; 
+      object-fit: contain; 
+    }
+    
+    .claim-text-list { 
+      width: 55%; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: space-between; 
+      padding: 8% 0 2% 0; 
+    }
+    .claim-text-item { 
+      display: block; 
+    }
+    .claim-text-item h4 { 
+      font-size: 17px; 
+      font-weight: 700; 
+      color: var(--dark); 
+      margin: 0 0 4px 0; 
+    }
+    .claim-text-item h5 { 
+      font-size: 12px; 
+      font-weight: 600; 
+      color: var(--muted); 
+      margin: 0 0 6px 0; 
+      text-transform: uppercase; 
+      letter-spacing: 0.05em; 
+    }
+    .claim-text-item p { 
+      font-size: 13.5px; 
+      line-height: 1.5; 
+      color: var(--text); 
+      margin: 0; 
+    }
+
     /* 通用组件 */
     .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
     .grid-1-full { display: grid; grid-template-columns: 1fr; gap: 24px; }
     .mini-card { background: white; border: 1px solid rgba(226, 232, 240, 0.6); border-radius: 20px; padding: 32px; box-shadow: var(--shadow-sm); }
-    .mini-card h3 { margin-bottom: 16px; color: var(--dark); font-size: 20px; font-weight: 700;}
-    .data-row { display: flex; border-bottom: 1px solid var(--border); padding: 16px 0; gap: 16px; align-items: flex-start;}
-    .data-row:last-child { border-bottom: none; padding-bottom: 0; }
-    .data-col-title { flex: 0 0 140px; font-weight: 600; color: var(--text); font-size: 15px;}
-    .data-col-desc { flex: 1; color: var(--muted); font-size: 14px; line-height: 1.6; }
     .note-box { border-radius: 12px; padding: 16px 20px; line-height: 1.6; font-size: 15px; border: 1px solid transparent; display: flex; align-items: center; gap: 16px; }
     .note-amber { background: var(--amber); border-color: #fde68a; color: #92400e; }
-    .note-green { background: var(--green); border-color: #d1fae5; color: #065f46; }
     .note-gray { background: #f1f5f9; border-color: var(--border); color: var(--text); }
-    .note-red { background: var(--red); border-color: #fecaca; color: #991b1b; }
     .actions { display: flex; justify-content: flex-end; gap: 16px; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); }
 
     @media (max-width: 960px) {
       .landing, .grid-2 { grid-template-columns: 1fr; }
       .landing-right { border-radius: 0 0 var(--radius-2xl) var(--radius-2xl); }
       .story-card { padding: 24px; }
-      .data-row { flex-direction: column; gap: 8px; }
-      .data-col-title { flex: auto; }
       .step-tabs { flex-direction: column; border-radius: 16px; padding: 8px;}
       .step-node { padding: 12px; }
       .setup-timeline { overflow-x: auto; padding-bottom: 20px; justify-content: flex-start; gap: 20px; margin: 20px 0; }
       .timeline-bg-line { width: 800px; }
+      .setup-paths-grid { grid-template-columns: 1fr; gap: 40px; }
       .service-item { flex-direction: column; text-align: center; }
+      .claim-sync-layout { flex-direction: column; gap: 32px; }
+      .claim-image-container { width: 100%; max-width: 320px; margin: 0 auto; }
+      .claim-text-list { width: 100%; padding: 0; gap: 24px; justify-content: flex-start; }
     }
   </style>
 </head>
@@ -377,41 +442,41 @@ const steps = [
     }
   },
   {
-    label: 'How to buy',
+    label: 'Setup',
     render: () => `
       <div style="margin-bottom: 24px; text-align: center;">
-        <h2 style="font-size: 36px; font-weight: 800; color: var(--dark);">Buying process</h2>
+        <h2 style="font-size: 36px; font-weight: 800; color: var(--dark);">Setup process</h2>
         <p style="color: var(--muted); margin-top: 12px; font-size: 16px;">A quick look at how your cover works, from the day you start to the moment it's needed</p>
       </div>
 
       <div class="setup-timeline">
         <div class="timeline-bg-line"></div>
         <div class="timeline-step">
-          <div class="img-placeholder-sm">Image<br>(Transparent)</div>
+          <div class="timeline-icon"><img src="2.png" alt="Quick quote icon"></div>
           <div class="timeline-node"></div>
           <div class="timeline-label-step">Step 1</div>
           <div class="timeline-label-title">Quick quote</div>
         </div>
         <div class="timeline-step">
-          <div class="img-placeholder-sm">Image<br>(Transparent)</div>
+          <div class="timeline-icon"><img src="1.png" alt="Choose cover icon"></div>
           <div class="timeline-node"></div>
           <div class="timeline-label-step">Step 2</div>
           <div class="timeline-label-title">Choose cover<br>& amount</div>
         </div>
         <div class="timeline-step">
-          <div class="img-placeholder-sm">Image<br>(Transparent)</div>
+          <div class="timeline-icon"><img src="3.png" alt="Detail quote icon"></div>
           <div class="timeline-node"></div>
           <div class="timeline-label-step">Step 3</div>
           <div class="timeline-label-title">Detail quote</div>
         </div>
         <div class="timeline-step">
-          <div class="img-placeholder-sm">Image<br>(Transparent)</div>
+          <div class="timeline-icon"><img src="4.png" alt="Instant quote icon"></div>
           <div class="timeline-node"></div>
           <div class="timeline-label-step">Step 4</div>
           <div class="timeline-label-title">Instant quote</div>
         </div>
         <div class="timeline-step">
-          <div class="img-placeholder-sm">Image<br>(Transparent)</div>
+          <div class="timeline-icon"><img src="5.png" alt="Policy starts icon"></div>
           <div class="timeline-node"></div>
           <div class="timeline-label-step">Step 5</div>
           <div class="timeline-label-title">Policy starts</div>
@@ -420,39 +485,44 @@ const steps = [
 
       <div class="spacer-lg"></div>
 
-      <div class="grid-2">
+      <div class="setup-paths-grid">
         <div class="path-card">
-          <div class="img-placeholder-lg">Image</div>
-          <h3 class="path-title">Plan & Protect <span class="path-tag">Online</span></h3>
-          <ul class="path-list">
-            <li>Age limit: 18–59 years old</li>
-            <li>Life cover limit: £500,000 / Critical illness limit: £500,000</li>
-            <li>Takes about 10 minutes to apply, get an instant underwriting decision after filling out the questionnaire</li>
-            <li>Cover starts immediately upon approval, no waiting</li>
-          </ul>
+          <div class="path-image-wrap"><img src="2 1.png" alt="Plan and Protect Online"></div>
+          <div class="path-content">
+            <h3 class="path-title">Plan & Protect <span class="path-tag">Online</span></h3>
+            <ul class="path-list">
+              <li>Age limit: 18–59 years old</li>
+              <li>Life cover limit: £500,000 / Critical illness limit: £500,000</li>
+              <li>Takes about 10 minutes to apply, get an instant underwriting decision after filling out the questionnaire</li>
+              <li>Cover starts immediately upon approval, no waiting</li>
+            </ul>
+          </div>
         </div>
 
         <div class="path-card">
-          <div class="img-placeholder-lg">Image</div>
-          <h3 class="path-title">Scottish Widows Protect <span class="path-tag" style="background:#f1f5f9; color:var(--muted);">Adviser</span></h3>
-          <ul class="path-list">
-            <li>Age limit: Life 18–79 years old / Critical illness 18–64 years old</li>
-            <li>Life cover up to £18,000,000 / Critical illness up to £3,000,000</li>
-            <li>Guided by a dedicated adviser over the phone to complete the application and agree on a start date</li>
-            <li>Contact: 0800 102 6827 (Mon-Thu 9am–7pm, Fri 9am–6pm)</li>
-          </ul>
+          <div class="path-image-wrap"><img src="2 2.png" alt="Scottish Widows Protect Adviser"></div>
+          <div class="path-content">
+            <h3 class="path-title">Scottish Widows Protect <span class="path-tag" style="background:#f1f5f9; color:var(--muted);">Adviser</span></h3>
+            <ul class="path-list">
+              <li>Age limit: Life 18–79 years old / Critical illness 18–64 years old</li>
+              <li>Life cover up to £18,000,000 / Critical illness up to £3,000,000</li>
+              <li>Guided by a dedicated adviser over the phone to complete the application and agree on a start date</li>
+              <li>Contact: 0800 102 6827 (Mon-Thu 9am–7pm, Fri 9am–6pm)</li>
+            </ul>
+          </div>
         </div>
       </div>
 
       <div class="spacer-md"></div>
       
-      <div class="note-box note-amber" style="margin-top: 16px;">
-        <strong>Tip:</strong> Full refund available if canceled within the 30-day cooling-off period.
+      <div style="background-color: #FFFDF5; border: 1px solid #FDE68A; border-radius: 12px; padding: 20px 24px; display: flex; align-items: flex-start; gap: 12px; color: #92400e; font-size: 15px; margin-top: 24px;">
+        <span style="font-size: 24px;">💡</span>
+        <div><strong>Tip:</strong> Full refund available if canceled within the 30-day cooling-off period.</div>
       </div>
     `
   },
   {
-    label: 'Cover',
+    label: "What's Included",
     render: () => `
       <div style="margin-bottom: 32px;">
         <h2 style="font-size: 32px; font-weight: 800; color: var(--dark); margin-bottom: 12px;">What does Life Insurance cover?</h2>
@@ -523,7 +593,7 @@ const steps = [
       <h3 style="font-size: 18px; font-weight: 700; color: var(--dark); margin: 32px 0 16px 0;">Free Additional Value-Added Services</h3>
       
       <div class="service-item">
-        <div class="service-img">Image<br>(Transparent)</div>
+        <div class="service-img"><img src="fa0c5d5f69b1ca154ab794e0ba2a62a3.png" alt="Clinic in a Pocket"></div>
         <div class="service-text">
           <h4>🩺 Clinic in a Pocket™ <span class="service-badge">Free</span></h4>
           <p>Provided by Square Health. 24/7 remote GP service for policyholder, spouse, and children. Includes free repeat prescription delivery.</p>
@@ -531,31 +601,31 @@ const steps = [
       </div>
       
       <div class="service-item">
-        <div class="service-img">Image<br>(Transparent)</div>
+        <div class="service-img"><img src="fa0c5d5f69b1ca154ab794e0ba2a62a3.png" alt="Nurse Support"></div>
         <div class="service-text">
           <h4>🤝 RedArc Nurse Support <span class="service-badge">Free</span></h4>
           <p>Long-term care advice and emotional support from RedArc, available from day one without needing to claim.</p>
         </div>
       </div>
-      
+
       <div class="service-item">
-        <div class="service-img">Image<br>(Transparent)</div>
+        <div class="service-img"><img src="fa0c5d5f69b1ca154ab794e0ba2a62a3.png" alt="Macmillan Support"></div>
         <div class="service-text">
           <h4>🎗 Macmillan Cancer Support Advance <span class="service-badge">Free</span></h4>
           <p>Request a £3,000 advance during critical illness claim processing to ease financial pressure.</p>
         </div>
       </div>
-      
+
       <div class="service-item">
-        <div class="service-img">Image<br>(Transparent)</div>
+        <div class="service-img"><img src="fa0c5d5f69b1ca154ab794e0ba2a62a3.png" alt="Terminal Illness & TPD"></div>
         <div class="service-text">
           <h4>🛡 Terminal Illness & Total Permanent Disability <span class="service-badge" style="background:#e2e8f0; color:var(--dark);">Included</span></h4>
           <p>Automatically embedded into life policies at no extra charge.</p>
         </div>
       </div>
-      
+
       <div class="service-item">
-        <div class="service-img">Image<br>(Transparent)</div>
+        <div class="service-img"><img src="fa0c5d5f69b1ca154ab794e0ba2a62a3.png" alt="Disney Plus"></div>
         <div class="service-text">
           <h4>🎬 Disney+ (12 Months) <span class="service-badge" style="background:#fffbeb; color:#92400e;">Offer</span></h4>
           <p>Buy a new policy directly via scottishwidows.co.uk and get 12 months of Disney+ Standard with Ads.</p>
@@ -594,48 +664,53 @@ const steps = [
     `
   },
   {
-    label: 'Claim', 
+    label: 'Process', 
     render: () => `
       <div style="margin-bottom: 40px;">
-        <h2 style="font-size: 32px; font-weight: 800; color: var(--dark);">Claim Process</h2>
-        <p style="color: var(--muted); margin-top: 8px; font-size: 16px;">Transparent steps for when you need support the most.</p>
+        <h2 style="font-size: 32px; font-weight: 800; color: var(--dark);">Process</h2>
+        <p style="color: var(--muted); margin-top: 8px; font-size: 16px;">If something serious happens, how does the claim journey work?</p>
       </div>
-      <div class="grid-2">
-        <div class="mini-card">
-          <h3>理赔流程</h3>
-          <div style="border-top: 1px solid var(--border); margin-top: 16px;">
-            <div class="data-row">
-              <div class="data-col-title">1: 联系团队</div>
-              <div class="data-col-desc">电话或在线提交，准备保单号。</div>
-            </div>
-            <div class="data-row">
-              <div class="data-col-title">2: 填写表格</div>
-              <div class="data-col-desc">重疾/收入保障需填写病情详情。</div>
-            </div>
-            <div class="data-row">
-              <div class="data-col-title">3: 授权记录</div>
-              <div class="data-col-desc">授权我们联系 GP 获取医疗报告。</div>
-            </div>
-            <div class="data-row">
-              <div class="data-col-title">4: 评估处理</div>
-              <div class="data-col-desc">引入 AI 加速文件处理。</div>
-            </div>
-          </div>
+      
+      <div class="claim-sync-layout">
+        <div class="claim-image-container">
+          <img src="4 1.jpg" alt="Claim Process Full Timeline" />
         </div>
 
-        <div class="grid-1-full">
-          <div class="note-box note-green" style="text-align:center; padding: 40px 24px; display: block;">
-            <div style="font-size: 48px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.02em;">99%</div>
-            <p style="font-weight: 700; font-size: 16px; margin:0;">2024 年寿险成功理赔率</p>
-            <p style="font-size: 14px; margin-top: 12px; opacity: 0.8;">全年共赔付 £1.41 亿</p>
+        <div class="claim-text-list">
+          <div class="claim-text-item">
+            <h4>Trigger & Notify</h4>
+            <h5>Initial Contact</h5>
+            <p>For illness-related claims, you can notify us by completing an online claim form or by calling our specialist claims team. The first step is to establish what has happened and what you need to do next.</p>
           </div>
-          <div class="note-box note-red" style="display:block;">
-            <h3 style="margin: 0 0 12px 0; font-size: 16px; font-weight: 700;">⚠️ 主要不受保情形</h3>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.8;">
-              <li>自伤 / 自杀行为</li>
-              <li>酗酒或药物滥用导致的伤病</li>
-              <li>核保时已明确除外的既往症</li>
-            </ul>
+
+          <div class="claim-text-item">
+            <h4>Evidence Gathering</h4>
+            <h5>Verification</h5>
+            <p>Depending on your claim type, you will need to provide specific documents. Copies of medical notes or correspondence are also helpful and can speed up the process.</p>
+          </div>
+
+          <div class="claim-text-item">
+            <h4>Assessment & Review</h4>
+            <h5>Deep Review</h5>
+            <p>Your claim is reviewed by a dedicated claims team, who check it against your policy terms and the evidence provided. You will receive updates on progress throughout this stage.</p>
+          </div>
+
+          <div class="claim-text-item">
+            <h4>The Decision</h4>
+            <h5>Outcome</h5>
+            <p>Once the assessment is complete, you will be informed of the outcome clearly. Scottish Widows paid 99% of life cover claims in 2024.</p>
+          </div>
+
+          <div class="claim-text-item">
+            <h4>Payout & Relief</h4>
+            <h5>Completion</h5>
+            <p>Approved claims are paid as promptly as possible. Life insurance and critical illness cover pay out as a lump sum to the nominated beneficiary or bank account.</p>
+          </div>
+
+          <div class="claim-text-item">
+            <h4>Ongoing Support</h4>
+            <h5>Post-Claim</h5>
+            <p>If you hold a Scottish Widows Protect policy, you also have access to Scottish Widows Care, which provides practical and emotional support through RedArc — at no additional cost.</p>
           </div>
         </div>
       </div>
